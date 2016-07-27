@@ -1,5 +1,3 @@
-package mu;
-
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.HashMap;
@@ -147,11 +145,11 @@ public class EvalVisitor extends MuBaseVisitor<Value> {
             case MuParser.EQ:
                 return left.isDouble() && right.isDouble() ?
                         new Value(Math.abs(left.asDouble() - right.asDouble()) < SMALL_VALUE) :
-                        new Value(left.equals(right));
+                        new Value(left.asString().equals(right.asString()));
             case MuParser.NEQ:
                 return left.isDouble() && right.isDouble() ?
                         new Value(Math.abs(left.asDouble() - right.asDouble()) >= SMALL_VALUE) :
-                        new Value(!left.equals(right));
+                        new Value(!left.asString().equals(right.asString()));
             default:
                 throw new RuntimeException("unknown operator: " + MuParser.tokenNames[ctx.op.getType()]);
         }
